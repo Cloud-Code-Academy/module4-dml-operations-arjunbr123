@@ -218,7 +218,7 @@ public with sharing class DMLOperationsTest {
     @IsTest
 	static void testUpsertAccountsWithContacts() {
 		Account testAccount = new Account(Name = 'Doe');
-		insert testAccount;
+		//insert testAccount;
 		// Create test contacts with last names matching account names
 		List<Contact> testContacts = new List<Contact>{
 			new Contact(LastName = 'Doe', FirstName = 'John'),

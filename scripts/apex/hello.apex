@@ -8,3 +8,22 @@
 string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
+
+
+		Account testAccount = new Account(Name = 'Doe');
+		insert testAccount;
+		// Create test contacts with last names matching account names
+		List<Contact> testContacts = new List<Contact>{
+			new Contact(LastName = 'Doe', FirstName = 'John'),
+			new Contact(LastName = 'Smith', FirstName = 'Jane')
+		};
+        DMLOperations.upsertAccountsWithContacts(testContacts);
+
+
+SELECT Name FROM Account where Id = '001Dn000014w4qoIAA'
+
+[{"Id":"001Dn000014w4qmIAA"},{"Id":"001Dn000014w4qnIAA"},{"Id":"001Dn000014w4qoIAA"}]
+
+
+
+        //select Id from Account where Name = 'Smith'
