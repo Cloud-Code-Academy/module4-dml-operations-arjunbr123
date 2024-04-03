@@ -27,3 +27,22 @@ SELECT Name FROM Account where Id = '001Dn000014w4qoIAA'
 
 
         //select Id from Account where Name = 'Smith'
+
+
+                // Prepare the Account name
+        String accountName = 'Test Account';
+    
+        // Prepare the Opportunity names
+        List<String> oppNames = new List<String>{ 'Opp 1', 'Opp 2', 'Opp 3' };
+    
+        // Call the method to test
+        DMLOperations.upsertOpportunities(accountName, oppNames);
+
+        Database.SELECT Name FROM Account where Name = 'Test Data' LIMIT 1
+
+
+        SELECT Name,AccountId FROM Opportunity 
+
+       Account[] acc = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+           system.debug(acc.size());
+           System.debug(acc.id);

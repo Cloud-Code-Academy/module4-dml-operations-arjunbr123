@@ -141,12 +141,17 @@ public with sharing class DMLOperations {
      */
     public static void upsertOpportunities(String accountName, List<String> oppNames) {
         Opportunity opp = new Opportunity();
-        for (String name : oppNames) {
-            opp.Name = name; 
-            opp.Account = [SELECT Name FROM Account where Name = :accountName];
-    }
-    Upsert opp;
-    }
+  
+       List<Account> acc = [SELECT Name FROM Account WHERE Name = :accountName LIMIT 1];
+       Account myId = acc.get(0);
+        for (Integer i=0; i<oppNames.size(); i++) {          
+                opp.AccountId = myId.Id;
+                opp.Name = oppNames[i]; 
+                opp.StageName = 'Prospecting';
+                opp.CloseDate = Date.today();
+            }
+        Upsert opp;
+       }
     
     /**
      * Question 9
