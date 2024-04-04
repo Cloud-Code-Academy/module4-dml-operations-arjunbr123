@@ -140,18 +140,23 @@ public with sharing class DMLOperations {
      * @param oppNames The list of Opportunity names.
      */
     public static void upsertOpportunities(String accountName, List<String> oppNames) {
-        Opportunity opp = new Opportunity();
+        //Opportunity opp = new Opportunity();
   
-       List<Account> acc = [SELECT Name FROM Account WHERE Name = :accountName LIMIT 1];
+        //Account testAcc1 = new Account(Name = accountName);
+        //upsert testAcc1;
+
+       List<Account> acc = [SELECT Id FROM Account WHERE Name = :accountName LIMIT 1];     
+       if(acc.size()>0){
        Account myId = acc.get(0);
-        for (Integer i=0; i<oppNames.size(); i++) {          
-                opp.AccountId = myId.Id;
-                opp.Name = oppNames[i]; 
-                opp.StageName = 'Prospecting';
-                opp.CloseDate = Date.today();
+       List <Opportunity> myList = new List<Opportunity>();   
+        for (Integer i=0; i<oppNames.size(); i++) {    
+            Opportunity opp = new Opportunity(AccountId=myId.Id,Name=oppNames[i],StageName='Prospecting',CloseDate = Date.today());       
+                myList.add(opp);             
             }
-        Upsert opp;
+            System.debug(myList);
+            Upsert myList;
        }
+    }
     
     /**
      * Question 9
