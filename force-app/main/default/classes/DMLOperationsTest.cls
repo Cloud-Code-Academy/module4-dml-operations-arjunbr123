@@ -154,8 +154,8 @@ public with sharing class DMLOperationsTest {
         // Prepare the Account name
         String accountName = 'Test Account';
 
-        Account testAcc1 = new Account(Name = 'Test Account');
-        insert testAcc1;
+       // Account testAcc1 = new Account(Name = 'Test Account');
+        //insert testAcc1;
         // Prepare the Opportunity names
         List<String> oppNames = new List<String>{ 'Opp 1', 'Opp 2', 'Opp 3' };
     
@@ -184,8 +184,9 @@ public with sharing class DMLOperationsTest {
         // Retrieve the updated Opportunities from the database
         List<Opportunity> updatedOpps = [SELECT Id, Name FROM Opportunity WHERE AccountId = :retrievedAcc.Id];
         
+        system.debug(updatedOpps);
         // Assert that the Opportunities were successfully updated
-       // System.assertEquals(oppNames.size(), updatedOpps.size(), 'The number of updated Opportunities should match the number of Opportunity names provided');
+        System.assertEquals(oppNames.size(), updatedOpps.size(), 'The number of updated Opportunities should match the number of Opportunity names provided');
     
         for (Opportunity opp : updatedOpps) {
             System.assert(oppNames.contains(opp.Name), 'All updated Opportunity names should be found in the database');

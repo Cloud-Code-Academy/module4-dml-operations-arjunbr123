@@ -146,16 +146,23 @@ public with sharing class DMLOperations {
         //upsert testAcc1;
 
        List<Account> acc = [SELECT Id FROM Account WHERE Name = :accountName LIMIT 1];     
+       Id myId;
        if(acc.size()>0){
-       Account myId = acc.get(0);
+       myId = acc.get(0).Id;
+       }
+       else{
+        Account testAcc1 = new Account(Name = accountName);
+        Insert testAcc1;
+       myId = testAcc1.Id;
+       }
        List <Opportunity> myList = new List<Opportunity>();   
         for (Integer i=0; i<oppNames.size(); i++) {    
-            Opportunity opp = new Opportunity(AccountId=myId.Id,Name=oppNames[i],StageName='Prospecting',CloseDate = Date.today());       
+            Opportunity opp = new Opportunity(AccountId=myId,Name=oppNames[i],StageName='Prospecting',CloseDate = Date.today());       
                 myList.add(opp);             
             }
             System.debug(myList);
-            Upsert myList;
-       }
+            Upsert myList Name;
+       
     }
     
     /**
