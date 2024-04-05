@@ -153,7 +153,9 @@ public with sharing class DMLOperationsTest {
     static void testUpsertOpportunities() {
         // Prepare the Account name
         String accountName = 'Test Account';
-    
+
+       // Account testAcc1 = new Account(Name = 'Test Account');
+        //insert testAcc1;
         // Prepare the Opportunity names
         List<String> oppNames = new List<String>{ 'Opp 1', 'Opp 2', 'Opp 3' };
     
@@ -161,7 +163,7 @@ public with sharing class DMLOperationsTest {
         DMLOperations.upsertOpportunities(accountName, oppNames);
     
         // Retrieve the Account from the database
-        Account retrievedAcc = [SELECT Id, Name FROM Account WHERE Name = :accountName];
+        Account retrievedAcc = [SELECT Id, Name FROM Account WHERE Name = :accountName LIMIT 1];
         
         // Retrieve the Opportunities from the database
         List<Opportunity> retrievedOpps = [SELECT Id, Name FROM Opportunity WHERE AccountId = :retrievedAcc.Id];
@@ -182,6 +184,7 @@ public with sharing class DMLOperationsTest {
         // Retrieve the updated Opportunities from the database
         List<Opportunity> updatedOpps = [SELECT Id, Name FROM Opportunity WHERE AccountId = :retrievedAcc.Id];
         
+        system.debug(updatedOpps);
         // Assert that the Opportunities were successfully updated
         System.assertEquals(oppNames.size(), updatedOpps.size(), 'The number of updated Opportunities should match the number of Opportunity names provided');
     
@@ -218,7 +221,7 @@ public with sharing class DMLOperationsTest {
     @IsTest
 	static void testUpsertAccountsWithContacts() {
 		Account testAccount = new Account(Name = 'Doe');
-		insert testAccount;
+		//insert testAccount;
 		// Create test contacts with last names matching account names
 		List<Contact> testContacts = new List<Contact>{
 			new Contact(LastName = 'Doe', FirstName = 'John'),
